@@ -8,8 +8,5 @@ updates:
     automerge:
       enabled: true
       options:
-        # You can customize auto-merge options here
-        # For example, you can specify labels that must be present
-        # on the pull request for auto-merge to occur
         labels:
           - "dependencies"
