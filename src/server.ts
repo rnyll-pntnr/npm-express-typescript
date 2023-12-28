@@ -6,9 +6,9 @@ import morgan from "morgan";
 import CORS from "cors";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
-import UsersController from "./collection/users/users.controller";
 import { PinoLogger } from "./utils/logger"
 import jwt from 'jsonwebtoken'
+import { join } from "path"
 
 @Service()
 export default class ExpressServer {
@@ -30,12 +30,6 @@ export default class ExpressServer {
     this.logger.info(`Server started on PORT: ${this.port}`)
   }
 
-  controllers() {
-    return [
-      UsersController
-    ];
-  }
-
   private _expressServer(): Application {
     const app = express();
 
@@ -53,7 +47,9 @@ export default class ExpressServer {
 
     return useExpressServer(app, {
       routePrefix: "/api",
-      controllers: this.controllers(),
+      controllers: [
+        join(__dirname, `./collection/**/*.controller.${process.env.NODE_ENV === 'production' ? 'js' : 'ts'}`)
+      ],
       authorizationChecker: async (action: Action) => {
         const _token = action.request.headers['authorization']
 

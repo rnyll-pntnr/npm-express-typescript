@@ -1,5 +1,12 @@
+#Production BUild
+dist
+
+#Test Files
 coverage
 node_modules
+
+#ENV Files
 .env.development
 .env.production
 .env.staging
+.env
